@@ -1,0 +1,36 @@
+<!-- <div class="container">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <div class="row">
+      <form class="form-signin">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" [(ngModel)]="login.email" class="form-control" placeholder="Email address" required autofocus />
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" [(ngModel)]="login.password" class="form-control" placeholder="Password" required />
+        <a (click)="onProcessLogin()" class="btn btn-lg btn-primary btn-block">Login</a>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-4"></div>
+</div>
+<!-- /container -->
+
+<div class="container">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading"> Please Login</div>
+        <div class="panel-body">
+          <div class="form-group">
+            <input type="text" class="form-control" [(ngModel)]="login.email" placeholder="E-Mail"/>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" [(ngModel)]="login.password" placeholder="Password"/>
+          </div>
+          <p><a (click)="onProcessLogin()" class="btn btn-primary">Login</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>

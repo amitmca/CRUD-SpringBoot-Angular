@@ -1,0 +1,118 @@
+<h2 class="text-center">Admin List</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12"><a (click)="onInsert()" class="btn btn-success" data-toggle="modal" data-target=".modal-insert"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Insert Admin</a>
+      <table class="table">
+        <thead>
+          <td>No</td>
+          <td>Nama</td>
+          <td>Email</td>
+          <td>Aksi</td>
+        </thead>
+        <tbody>
+          <tr *ngFor="let admin of admins; let i = index">
+            <td>{{ i+1 }}</td>
+            <td>{{ admin.nama }}</td>
+            <td>{{ admin.email }}</td>
+            <td style="width: 150px" class="text-right">
+              <a (click)="onEdit(admin)" class="btn btn-warning" data-toggle="modal" data-target=".modal-update"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+              <a (click)="onRemoveAdmin(admin.id)" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+    <!-- Modal Insert -->
+    <div class="modal fade modal-insert" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-md" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="gridSystemModalLabel">Form Update Admin</h4>
+            </div>
+            <!--form insert-->
+            <div class="modal-body">
+              <form method="post">
+                <div class="form-group ">
+                  <label class="control-label requiredField" for="nama">Nama Admin
+              <span class="asteriskField">*</span>
+             </label>
+                  <input class="form-control" id="nama" name="nama" type="text" [(ngModel)]="newAdmin.nama" #nama="ngModel" />
+                </div>
+                <div class="form-group ">
+                  <label class="control-label requiredField" for="email">
+                    Email
+                    <span class="asteriskField">*</span>
+                  </label>
+                  <input class="form-control" id="email" name="email" type="text" [(ngModel)]="newAdmin.email" #email="ngModel" />
+                </div>
+                <div class="form-group ">
+                  <label class="control-label requiredField" for="password">
+                    Password
+                    <span class="asteriskField">*</span>
+                  </label>
+                  <input class="form-control" id="password" name="password" type="password" [(ngModel)]="newAdmin.password" #password="ngModel" />
+                </div>
+                <div class="form-group">
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a (click)="onInsertNewAdmin()" class="btn btn-primary" data-dismiss="modal">Simpan</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!-- end form update -->
+    
+          </div>
+        </div>
+      </div>
+      <!-- end modal update -->
+
+  <!-- Modal Update -->
+  <div class="modal fade modal-update" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="gridSystemModalLabel">Form Update Admin</h4>
+        </div>
+        <!--form update-->
+        <div class="modal-body">
+          <form method="post">
+            <div class="form-group ">
+              <label class="control-label requiredField" for="nama">Nama Admin
+          <span class="asteriskField">*</span>
+         </label>
+              <input class="form-control" id="nama" name="nama" type="text" [(ngModel)]="newAdmin.nama" #nama="ngModel" />
+            </div>
+            <div class="form-group ">
+              <label class="control-label requiredField" for="email">
+                Email
+                <span class="asteriskField">*</span>
+              </label>
+              <input class="form-control" id="email" name="email" type="text" [(ngModel)]="newAdmin.email" #email="ngModel" />
+            </div>
+            <div class="form-group ">
+              <label class="control-label requiredField" for="password">
+                Password
+                <span class="asteriskField">*</span>
+              </label>
+              <input class="form-control" id="password" name="password" type="password" [(ngModel)]="newAdmin.password" #password="ngModel" />
+            </div>
+            <div class="form-group">
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <a (click)="onUpdateAdmin()" class="btn btn-primary" data-dismiss="modal">Simpan</a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- end form update -->
+
+      </div>
+    </div>
+  </div>
+  <!-- end modal update -->
+</div>

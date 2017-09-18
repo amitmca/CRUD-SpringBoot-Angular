@@ -1,0 +1,322 @@
+<h2 class="text-center">Data Gadai</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <table class="table table-striped table-hover">
+        <thead>
+          <td>No</td>
+          <td>Kode Gadai</td>
+          <td>Nasabah</td>
+          <td>Tanggal Gadai</td>
+          <!--<td>Berat Emas</td>-->
+          <!--<td>Karat</td>-->
+          <!--<td>Harga Taksiran</td>-->
+          <td>Pinjaman</td>
+          <td>Lama Angsuran</td>
+          <!--<td>Bunga</td>-->
+          <td>Angsuran/Bln</td>
+          <td>Tebusan</td>
+          <td>Jatuh Tempo</td>
+        </thead>
+        <tbody>
+          <tr *ngFor="let gadai of gadais; let i = index">
+            <td>{{ i+1 }}</td>
+            <td>{{ gadai.kodeGadai }}</td>
+            <td>{{ gadai.nasabah.namaNasabah }}</td>
+            <td>{{ gadai.tglGadai }}</td>
+            <!--<td>{{ gadai.berat }}</td>-->
+            <!--<td>{{ gadai.karat }}</td>-->
+            <!--<td>{{ gadai.harga }}</td>-->
+            <td>{{ gadai.pinjaman }}</td>
+            <td>{{ gadai.lamaAngsuran }}</td>
+            <!--<td>{{ gadai.bunga }}</td>-->
+            <td>{{ gadai.jmlAngsuran }}</td>
+            <td>{{ gadai.totalTebusan }}</td>
+            <td>{{ gadai.tgljatuhTempo }}</td>
+            <td style="width: 150px" class="text-right">
+              <a (click)="onDetail(gadai)" class="btn btn-primary" data-toggle="modal" data-target=".modal-detail"><i class="fa fa-search" aria-hidden="true"></i></a>
+              <a (click)="onEdit(gadai)" class="btn btn-warning" data-toggle="modal" data-target=".modal-update"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+              <a (click)="onRemoveGadai(gadai.id)" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Detail -->
+<div class="modal fade modal-detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Detail Gadai Kode <input size="3" [(ngModel)]="newGadai.kodeGadai" [ngModelOptions]="{standalone: true}" class="form-control" readonly/> </h4>
+      </div>
+      <!--form detail-->
+      <div class="modal-body">
+        <table class="table table-striped">
+          <tr>
+            <td>Nama Nasabah</td>
+            <td>:</td>
+            <td colspan="4"><select class="select form-control" [(ngModel)]="newGadai.nasabah" name="nasabah" [(compareWith)]="compareFn" readonly>
+                <option *ngFor="let nas of nasabahs" [ngValue]="nas" selected readonly>{{nas.namaNasabah}}</option>
+            </select>
+            </td>
+          </tr>
+          <tr>
+            <td>Berat Emas (gram)</td>
+            <td>:</td>
+            <td><input [(ngModel)]="newGadai.berat" [ngModelOptions]="{standalone: true}" class="form-control" type="text" readonly /></td>
+            <td>Jumlah Karat</td>
+            <td>:</td>
+            <td><input [(ngModel)]="newGadai.karat" [ngModelOptions]="{standalone: true}" class="form-control" type="text" readonly /></td>
+          </tr>
+          <tr>
+            <td>Harga Taksiran</td>
+            <td>:</td>
+            <td><input [(ngModel)]="newGadai.harga" [ngModelOptions]="{standalone: true}" class="form-control" type="text" readonly /></td>
+            <td>Jumlah Pinjaman</td>
+            <td>:</td>
+            <td><input [(ngModel)]="newGadai.pinjaman" [ngModelOptions]="{standalone: true}" class="form-control" type="text" readonly /></td>
+          </tr>
+          <tr>
+            <td>Lama Angsuran</td>
+            <td>:</td>
+            <td><input [(ngModel)]="newGadai.lamaAngsuran" name="lama" class="form-control" type="text" readonly /></td>
+            <td>Bunga %</td>
+            <td>:</td>
+            <td><input [(ngModel)]="newGadai.bunga" [ngModelOptions]="{standalone: true}" class="form-control" type="text" readonly /></td>
+          </tr>
+          <tr>
+            <td>Jumlah Angsuran/bulan</td>
+            <td>:</td>
+            <td><input [(ngModel)]="newGadai.jmlAngsuran" [ngModelOptions]="{standalone: true}" class="form-control" type="text" readonly /></td>
+            <td>Total Tebusan</td>
+            <td>:</td>
+            <td><input [(ngModel)]="newGadai.totalTebusan" [ngModelOptions]="{standalone: true}" class="form-control" type="text" readonly /></td>
+          </tr>
+          <tr>
+            <td>Tanggal Gadai</td>
+            <td>:</td>
+            <td><input [(ngModel)]="newGadai.tglGadai" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="YYYY/MM/DD" type="text" readonly /></td>
+            <td>Tanggal Jatuh Tempo</td>
+            <td>:</td>
+            <td><input [(ngModel)]="newGadai.tgljatuhTempo" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="YYYY/MM/DD" type="text" readonly /></td>
+          </tr>
+        </table>
+        <form method="post">
+          <div class="form-group">
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <a (click)="onPrint()" class="btn btn-primary" data-dismiss="modal">Cetak</a>
+              
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- end form detail -->
+
+    </div>
+  </div>
+</div>
+<!-- end modal detail -->
+
+<!-- Modal Update -->
+<div class="modal fade modal-update" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="gridSystemModalLabel">Update Gadai</h4>
+        </div>
+        <!--form update-->
+        <div class="modal-body">
+          
+            <form method="post">
+                <table class="table table-responsive">
+                  <tr>
+                    <td></td>
+                    <td>
+                      <div class="form-group ">
+                        <label ngclass="control-label requiredField" for="kodeGadai">Kode Gadai<span class="asteriskField">*</span></label>
+                        <input [(ngModel)]="newGadai.kodeGadai" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Kode Gadai"
+                          type="text" required #kode="ngModel" />
+                        <div *ngIf="(kode.invalid && (kode.dirty || kode.touched))" class="alert alert-danger">
+                          <div *ngIf="kode.errors.required">
+                            Kode Gadai Harus Diisi!
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group ">
+                        <label class="control-label requiredField" for="nasabah">Nama Nasabah<span class="asteriskField">*</span></label>
+                        <select class="select form-control" [(ngModel)]="newGadai.nasabah" name="nasabah" [(compareWith)]="compareFn" >
+                                    <option *ngFor="let nas of nasabahs" [ngValue]="nas" selected>{{nas.namaNasabah}}</option>
+                                </select>
+                      </div>
+                    </td>
+                    <td></td>
+                  </tr>
+        
+                  <tr>
+                    <td>
+                      <div class="form-group ">
+                        <label class="control-label requiredField" for="berat">Berat Emas (gram)<span class="asteriskField">*</span></label>
+                        <input [(ngModel)]="newGadai.berat" [ngModelOptions]="{standalone: true}" class="form-control" type="number" required #berat="ngModel" />
+                        <div *ngIf="(berat.invalid && (berat.dirty || berat.touched))" class="alert alert-danger">
+                            <div *ngIf="kode.errors.required">
+                                Berat Emas Harus Diisi!
+                            </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group ">
+                        <label name="karat" class="control-label requiredField" for="karat">Karat (1-24)<span class="asteriskField">*</span></label>
+                        <input [(ngModel)]="newGadai.karat" [ngModelOptions]="{standalone: true}" class="form-control" type="number" required #karat="ngModel" />
+                        <div *ngIf="(karat.invalid && (karat.dirty || karat.touched))" class="alert alert-danger">
+                            <div *ngIf="karat.errors.required">
+                                Jumlah Karat Harus Diisi!
+                            </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group ">
+                        <label class="control-label requiredField" for="harga">Harga Taksiran<span class="asteriskField">*</span></label>
+                        <input [(ngModel)]="newGadai.harga" [ngModelOptions]="{standalone: true}" class="form-control" type="number" readonly />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <br />
+                        <a (click)="onHitung()" class="btn btn-success " name="submit" type="submit"><span class="glyphicon glyphicon-plus"></span></a>
+                      </div>
+                    </td>
+                  </tr>
+        
+                  <tr>
+                    <td>
+                      <div class="form-group ">
+                        <label class="control-label requiredField" for="pinjaman">Jumlah Pinjaman<span class="asteriskField">*</span></label>
+                        <input [(ngModel)]="newGadai.pinjaman" [ngModelOptions]="{standalone: true}" class="form-control" type="number" required #pinjam="ngModel" />
+                        <div *ngIf="(pinjam.invalid && (pinjam.dirty || pinjam.touched))" class="alert alert-danger">
+                            <div *ngIf="pinjam.errors.required">
+                                Pinjaman Harus Diisi!
+                            </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group ">
+                        <label class="control-label requiredField" for="lamaAngsuran">Lama Angsuran (bulan)<span class="asteriskField">*</span></label>
+                        <input [(ngModel)]="newGadai.lamaAngsuran" name="lama" class="form-control" type="number" required #lama="ngModel" />
+                        <div *ngIf="(lama.invalid && (lama.dirty || lama.touched))" class="alert alert-danger">
+                            <div *ngIf="lama.errors.required">
+                                Lama Angsuran Harus Diisi!
+                            </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group ">
+                        <label class="control-label requiredField" for="bunga">Bunga (%)<span class="asteriskField">*</span></label>
+                        <input [(ngModel)]="newGadai.bunga" [ngModelOptions]="{standalone: true}" class="form-control" type="number" required #bunga="ngModel" />
+                        <div *ngIf="(bunga.invalid && (bunga.dirty || bunga.touched))" class="alert alert-danger">
+                            <div *ngIf="bunga.errors.required">
+                                Bunga Harus Diisi!
+                            </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <br />
+                        <a (click)="onHitung2()" class="btn btn-success " name="submit" type="submit"><span class="glyphicon glyphicon-plus"></span></a>
+                      </div>
+                    </td>
+                  </tr>
+        
+                  <tr>
+                    <td></td>
+                    <td>
+                      <div class="form-group ">
+                        <label class="control-label requiredField" for="jmlAngsuran">Jumlah Angsuran/Bulan<span class="asteriskField">*</span></label>
+                        <input [(ngModel)]="newGadai.jmlAngsuran" [ngModelOptions]="{standalone: true}" class="form-control" type="number" required #jml="ngModel" />
+                        <div *ngIf="(jml.invalid && (jml.dirty || jml.touched))" class="alert alert-danger">
+                            <div *ngIf="kode.errors.required">
+                                Jumlah Angsuran Harus Diisi!
+                            </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group ">
+                        <label class="control-label requiredField" for="totalTebusan">Total Tebusan<span class="asteriskField">*</span></label>
+                        <input [(ngModel)]="newGadai.totalTebusan" [ngModelOptions]="{standalone: true}" class="form-control" type="number" required #total="ngModel" />
+                        <div *ngIf="(total.invalid && (total.dirty || total.touched))" class="alert alert-danger">
+                            <div *ngIf="total.errors.required">
+                                Total Tebusan Harus Diisi!
+                            </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td></td>
+                  </tr>
+        
+                  <tr>
+                    <td></td>
+                    <td>
+                      <div class="form-group ">
+                        <label class="control-label requiredField" for="tglGadai">Tanggal Gadai<span class="asteriskField">*</span></label>
+                        <input [(ngModel)]="newGadai.tglGadai" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="YYYY/MM/DD"
+                          type="text" readonly />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group ">
+                        <label class="control-label requiredField" for="tgljatuhTempo">Tanggal Jatuh Tempo<span class="asteriskField">*</span></label>
+                        <input [(ngModel)]="newGadai.tgljatuhTempo" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="YYYY/MM/DD"
+                          type="text" readonly />
+                      </div>
+                    </td>
+                    <td></td>
+                  </tr>
+                </table>
+              </form>
+          
+          <form method="post">
+            <div class="form-group">
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <ng-container *ngIf="
+                  newGadai.kodeGadai == null ||
+                  newGadai.nasabah == null ||
+                  newGadai.berat == null ||
+                  newGadai.karat == null ||
+                  newGadai.harga == null ||
+                  newGadai.pinjaman == null ||
+                  newGadai.lamaAngsuran == null ||
+                  newGadai.bunga == null ||
+                  newGadai.jmlAngsuran == null ||
+                  newGadai.totalTebusan == null ||
+                  newGadai.tglGadai == null ||
+                  newGadai.tgljatuhTempo == null; 
+                  else elseTemplate">
+                  <a (click)="onUpdateGadai()" class="btn btn-primary" data-dismiss="modal" disabled><span class="glyphicon glyphicon-save"></span> Simpan</a>
+                  </ng-container>
+                  <ng-template #elseTemplate>
+                  <a (click)="onUpdateGadai()" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-save"></span> Simpan</a>
+                  </ng-template>  
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- end form detail -->
+  
+      </div>
+    </div>
+  </div>
+  <!-- end modal detail -->
